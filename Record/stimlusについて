@@ -1,0 +1,49 @@
+// src/controllers/hello_controller.js
+import { Controller } from "@hotwired/stimulus"
+
+export default class extends Controller {
+  connect() {
+    console.log("Hello, Stimulus!", this.element)
+  }
+}
+
+
+#識別子は、要素とコントローラーを結びつける役割を果たします。
+#data-controller="hello"の識別子は、helloStimulusにコントローラークラスのインスタンスを作成するよう指示します。
+<div data-controller="hello">
+  <input type="text">
+  <button>Greet</button>
+</div>
+クリックしたときに変更をしたい場合は、
+connect()をgreet()に変更する。
+併せて記述を下記のように変更する。
+<div data-controller="hello">
+  <input type="text">
+  <button data-action="click->hello#greet">Greet</button>
+</div>
+
+action descriptorの説明
+このdata-action値（click->hello#greet）はaction descriptorと呼ばれます。この記述子は次のことを示します。
+
+click：イベント名
+hello：コントローラ識別子
+greet：呼び出すメソッドの名前
+
+・フィールドに入力した名前に「こんにちは」と返す
+<div data-controller="hello">
+  <input data-hello-target="name" type="text">
+  <button data-action="click->hello#greet">Greet</button>
+</div>
+
+// src/controllers/hello_controller.js
+import { Controller } from "@hotwired/stimulus"
+
+export default class extends Controller {
+  static targets = [ "name" ]
+
+  greet() {
+    const element = this.nameTarget
+    const name = element.value
+    console.log(`Hello, ${name}!`)
+  }
+}
