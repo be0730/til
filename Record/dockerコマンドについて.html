@@ -1,0 +1,63 @@
+docker--container
+        --run
+        --start
+        --stop
+        --rm
+      --compose
+        --up
+        --run
+        --start
+        --stop
+        --down
+          （オプション）
+          --rmi  イメージを削除。all：全てのイメージを削除、local：ローカルイメージのみ削除
+          --v  volumesに記載したボリュームとコンテナにアタッチされた匿名ボリュームを削除
+          --remove-orphans  composeファイルに記載されていないコンテナを削除
+      --image
+        --build
+        --ls
+        --pull
+        --push
+        --rm
+      --network
+        --create
+        --ls
+        --rm
+      --volume
+        --create
+        --ls
+        --rm
+
+・コンテナへファイルをコピー
+  docker compose cp <ホストのファイルパス> <コンテナ名>:<コンテナ内のファイルパス>
+・Dockerホストへファイルをコピー
+  docker compose cp <コンテナ名>:<コンテナ内のファイルパス> <ホストのファイルパス>
+
+・コンテナのログを確認
+  docker compose logs <コンテナ名>
+・リアルタイムでログを確認
+  docker compose logs -f <コンテナ名>
+・特定の行数分だけログを確認
+  docker compose logs --tail <行数> <コンテナ名>
+
+・コンテナ作成に関わるコマンド
+  |コマンド|イメージのビルド|コンテナの作成|コンテナの実行|
+  |build|○| | | |
+  |start| | |○|
+  |up|△|○|○|
+  |up --build|○|○|○|
+  |run|△|○|○|
+
+・コンテナの停止や削除に関わるコマンド
+  |コマンド|コンテナの停止|コンテナの削除|イメージの削除|
+  |stop|○| | |
+  |rm| |○| |
+  |rm -s|○|○| |
+  |down|○|○| |
+  |down --rmi all|○|○|○|
+
+・Dockerで自動作成されるネットワーク
+  |ネットワーク名|概要|
+  |bridge|デフォルトのネットワーク。コンテナ同士が通信可能|
+  |host|ホストのネットワークを使用。コンテナはホストのネットワーク設定を共有|
+  |none|ネットワークを使用しない|
